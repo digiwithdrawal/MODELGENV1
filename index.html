@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cloud Face Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="mini">CLOUD</span>
+        <strong>FACE EDITOR</strong>
+      </div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="import">IMPORT</button>
+        <button class="tab" data-tab="markers">MARKERS</button>
+        <button class="tab" data-tab="generate">GENERATE</button>
+        <button class="tab" data-tab="export">EXPORT</button>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <section class="left-panel">
+        <section class="panel active" id="panel-import">
+          <h2>01 / IMPORT MODEL</h2>
+          <p class="note">Upload a GLB/GLTF character from Tripo, Meshy, Rodin, etc. The model should appear immediately in the viewport.</p>
+          <label class="file-label">
+            Import GLB / GLTF
+            <input id="modelInput" type="file" accept=".glb,.gltf,model/gltf-binary,model/gltf+json" />
+          </label>
+          <div class="btn-grid">
+            <button id="frontView">FRONT VIEW</button>
+            <button id="sideView">SIDE VIEW</button>
+            <button id="resetView">RESET VIEW</button>
+          </div>
+          <p class="status" id="modelStatus">No model imported yet.</p>
+        </section>
+
+        <section class="panel" id="panel-markers">
+          <h2>02 / PLACE FACE MARKERS</h2>
+          <p class="note">Pick a marker type, then click directly on the model's face. This works like a Mixamo-style placement tool.</p>
+          <div class="marker-list">
+            <button class="marker-btn" data-marker="leftEye">PLACE LEFT EYE</button>
+            <button class="marker-btn" data-marker="rightEye">PLACE RIGHT EYE</button>
+            <button class="marker-btn" data-marker="mouth">PLACE MOUTH</button>
+            <button class="marker-btn" data-marker="leftBrow">PLACE LEFT BROW</button>
+            <button class="marker-btn" data-marker="rightBrow">PLACE RIGHT BROW</button>
+          </div>
+          <button id="clearMarkers">CLEAR MARKERS</button>
+          <p class="status" id="markerStatus">Active marker: none.</p>
+        </section>
+
+        <section class="panel" id="panel-generate">
+          <h2>03 / GENERATE FACE PARTS</h2>
+          <label>Eye Color <input type="color" id="eyeColor" value="#ff3128"></label>
+          <label>Brow Color <input type="color" id="browColor" value="#111111"></label>
+          <label>Mouth Color <input type="color" id="mouthColor" value="#160404"></label>
+          <label>Face Patch Color <input type="color" id="patchColor" value="#e6b08e"></label>
+          <label>Eye Size <input type="range" id="eyeSize" min="0.03" max="0.35" step="0.01" value="0.14"></label>
+          <label>Mouth Size <input type="range" id="mouthSize" min="0.05" max="0.5" step="0.01" value="0.20"></label>
+          <label class="check"><input type="checkbox" id="usePatch" checked> Add flat skin-colored face patch to cover painted eyes/mouth</label>
+          <button id="generateFace">GENERATE / UPDATE FACE</button>
+          <button id="deleteFace">DELETE GENERATED FACE</button>
+          <p class="status" id="generateStatus">Place at least left eye, right eye, and mouth.</p>
+        </section>
+
+        <section class="panel" id="panel-export">
+          <h2>04 / EXPORT</h2>
+          <p class="note">Exports your original imported model plus generated separate eye, brow, mouth, and patch objects.</p>
+          <button id="exportGLB">EXPORT FIXED GLB</button>
+          <p class="status" id="exportStatus">Ready when a model is imported.</p>
+        </section>
+      </section>
+
+      <section class="viewer-wrap">
+        <div id="viewer"></div>
+        <div class="hud">
+          <span id="hudText">IMPORT A GLB/GLTF MODEL</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
